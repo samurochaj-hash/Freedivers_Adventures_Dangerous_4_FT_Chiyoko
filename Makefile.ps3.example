@@ -1,0 +1,19 @@
+# Exemplo ilustrativo para toolchain PSL1GHT; nao gera PKG.
+TARGET := freediver_chiyoko
+CXX := ppu-g++
+CXXFLAGS := -O2 -Wall -Wextra -std=gnu++14
+SOURCES := src/main.cpp src/game_state.cpp
+OBJECTS := $(SOURCES:.cpp=.o)
+
+all: $(TARGET).elf
+
+$(TARGET).elf: $(OBJECTS)
+	$(CXX) $(OBJECTS) -o $@
+
+src/%.o: src/%.cpp
+	$(CXX) $(CXXFLAGS) -Isrc -c $< -o $@
+
+clean:
+	rm -f $(OBJECTS) $(TARGET).elf
+
+.PHONY: all clean
